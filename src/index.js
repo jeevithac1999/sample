@@ -1,9 +1,15 @@
-var http = require("http");
+const http = require("http");
+const getQueryString = require("./getQueryString");
 
-//create a server object:
 http
-  .createServer(function(req, res) {
-    res.write("Hello World!!!!"); //write a response to the client
-    res.end(); //end the response
+  .createServer((req, res) => {
+    //res.write('hi');
+    //res.writeHead(200,{"Content-Type":"text/html"});
+    res.writeHead(200, { "Content-Type": "application/json" }); //type is refered by a format called Mime type
+    const queryObject = getQueryString(req.url);
+    res.write(JSON.stringify(queryObject));
+    console.log("h");
+    //res.write(JSON.stringify({status:"success"}));
+    res.end();
   })
-  .listen(8080); //the server object listens on port 8080
+  .listen(8000);
